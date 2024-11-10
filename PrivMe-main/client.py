@@ -8,7 +8,6 @@ async def main():
             msg = str(input())
             await websocket.send(msg)
             message = await websocket.recv()
-            print(message)
 
 
 if __name__ == "__main__":
