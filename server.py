@@ -11,9 +11,8 @@ async def echo(websocket):
 
         for i in connectedSockets:
             await i.send(message)
-            print(i, message)
+            print(message)
 
-        print(message, websocket)
 
 
 async def main():
@@ -23,4 +22,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

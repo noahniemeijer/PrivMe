@@ -10,6 +10,5 @@ async def main():
             message = await websocket.recv()
             print(message)
 
-
 if __name__ == "__main__":
     asyncio.run(main())
