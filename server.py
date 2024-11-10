@@ -13,7 +13,7 @@ async def echo(websocket):
             await i.send(message)
             print(message)
 
-
+    print("---")
 
 async def main():
     async with serve(echo, "localhost", 8765) as server:
