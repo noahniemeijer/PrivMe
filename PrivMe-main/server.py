@@ -11,7 +11,9 @@ async def echo(websocket):
 
         for i in connectedSockets:
             await i.send(message)
-            print(message)
+            print(i, message)
+
+        print(message, websocket)
 
 
 async def main():
