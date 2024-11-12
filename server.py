@@ -1,33 +1,20 @@
-import asyncio
-from websockets.asyncio.server import serve
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
 
-connectedSockets = []
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate('cred.json')
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://privme-1be9c-default-rtdb.europe-west1.firebasedatabase.app/'
+})
 
-async def echo(websocket):
-    connectedSockets.append(websocket)
-    print(connectedSockets)
+def receive_message(event):
+    data = event.data
+    if isinstance(data, dict):
+        for key, message in data.items():
+            print(f"{message}")
+    elif isinstance(data, str):
+        print(f"{data}")
 
-    async for message in websocket:
-
-        for i in connectedSockets:
-            await i.send(message)
-            print(message)
-
-
-
-async def main():
-    async with serve(echo, "localhost", 8765) as server:
-        await server.serve_forever()
-        
-async def main():
-    async with connect("ws://localhost:8765") as websocket:
-        while 1:
-            msg = str(input())
-            await websocket.send(msg)
-            message = await websocket.recv()
-            print(message)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
+ref = db.reference("/")
+ref.listen(receive_message)
